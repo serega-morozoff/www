@@ -1,0 +1,343 @@
+<?php
+
+function my_forms_menu()
+{
+    $items = array();
+    $items['my/forms'] = array(
+        'title' => 'A My Form Example',
+        'page callback'    => 'my_intro',
+        'access callback'  => TRUE,
+    );
+
+    $items['my/forms/ex/1'] = array(
+        'title' => 'Example #1',
+        'page callback' => 'drupal_get_form',
+        'page arguments' => array('my_ex_1'),
+        'access callback'  => TRUE,
+    );
+
+    $items['my/forms/ex/2'] = array(
+        'title' => 'Example #2',
+        'page callback' => 'drupal_get_form',
+        'page arguments' => array('my_ex_2'),
+        'access callback'  => TRUE,
+    );
+
+    $items['my/forms/ex/3'] = array(
+        'title' => 'Example #3',
+        'page callback' => 'drupal_get_form',
+        'page arguments' => array('my_ex_3'),
+        'access callback'  => TRUE,
+    );
+
+    $items['my/forms/ex/4'] = array(
+        'title' => 'Example #4',
+        'page callback' => 'drupal_get_form',
+        'page arguments' => array('my_ex_4'),
+        'access callback'  => TRUE,
+    );
+
+    $items['my/forms/ex/5'] = array(
+        'title' => 'Example #5',
+        'page callback' => 'drupal_get_form',
+        'page arguments' => array('my_ex_5'),
+        'access callback'  => TRUE,
+    );
+
+    $items['my/forms/ex/6'] = array(
+        'title' => 'Example #6',
+        'page callback' => 'drupal_get_form',
+        'page arguments' => array('my_ex_6'),
+        'access callback'  => TRUE,
+    );
+	
+    $items['my/forms/ex/8'] = array(
+        'title' => 'Example #8',
+        'page callback' => 'drupal_get_form',
+        'page arguments' => array('my_ex_8'),
+        'access callback'  => TRUE,
+    );	
+
+    return $items;
+}
+
+function my_intro() {
+    $markup = t('Hi, how are you. My Forms Examples. Use Links bottom this text.');
+    $markup .= t('<br>');
+    $markup .= t('<a href="/my/forms/ex/1">Example 1</a>');
+    $markup .= t('&nbsp;&nbsp;&nbsp;<a href="/my/forms/ex/2">Example 2</a>');
+    $markup .= t('&nbsp;&nbsp;&nbsp;<a href="/my/forms/ex/3">Example 3</a>');
+    $markup .= t('&nbsp;&nbsp;&nbsp;<a href="/my/forms/ex/4">Example 4</a>');
+    $markup .= t('&nbsp;&nbsp;&nbsp;<a href="/my/forms/ex/5">Example 5</a>');
+    $markup .= t('&nbsp;&nbsp;&nbsp;<a href="/my/forms/ex/6">Example 6</a>');
+    $markup .= t('&nbsp;&nbsp;&nbsp;<a href="/my/forms/ex/8">Example 8</a>');
+
+    return array('#markup' => $markup);
+}
+
+function my_ex_1($form, &$form_state) {
+    $form['description'] = array(
+        '#type' => 'item',
+        '#title' => t('A form with nothing but a textfield'),
+    );
+    // This is the first form element. It's a textfield with a label, "Name"
+    $form['name'] = array(
+        '#type' => 'textfield',
+        '#title' => t('Name'),
+        '#suffix' => '<a href="/my/forms"><< Back</a>',
+    );
+
+    return $form;
+}
+
+function my_ex_2($form, &$form_state) {
+    $form['description'] = array(
+        '#type' => 'item',
+        '#title' => t('A simple form with a submit button'),
+    );
+
+    $form['name'] = array(
+        '#type' => 'textfield',
+        '#title' => t('Name'),
+    );
+
+    // Adds a simple submit button that refreshes the form and clears its
+    // contents. This is the default behavior for forms.
+    $form['submit'] = array(
+        '#type' => 'submit',
+        '#value' => 'Submit',
+        '#suffix' => '<br/><a href="/my/forms"><< Back</a>',
+    );
+    return $form;
+}
+
+/**
+ * Example 3: A basic form with fieldsets.
+ *
+ * We establish a fieldset element and then place two text fields within
+ * it, one for a first name and one for a last name. This helps us group
+ * related content.
+ *
+ * Study the code below and you'll notice that we renamed the array of the first
+ * and last name fields by placing them under the $form['name']
+ * array. This tells Form API these fields belong to the $form['name'] fieldset.
+ *
+ * @ingroup form_example
+ */
+function my_ex_3($form, &$form_state) {
+    $form['description'] = array(
+        '#type' => 'item',
+        '#title' => t('A form with a fieldset'),
+    );
+
+    $form['name'] = array(
+        '#type' => 'fieldset',
+        '#title' => t('Name'),
+    );
+    $form['name']['first'] = array(
+        '#type' => 'textfield',
+        '#title' => t('First name'),
+    );
+    $form['name']['last'] = array(
+        '#type' => 'textfield',
+        '#title' => t('Last name'),
+    );
+
+    $form['submit'] = array(
+        '#type' => 'submit',
+        '#value' => 'Submit',
+        '#suffix' => '<br/><a href="/my/forms"><< Back</a>',
+    );
+    return $form;
+}
+
+function my_ex_4($form, &$form_state) {
+    $form['description'] = array(
+        '#type' => 'item',
+        '#title' => t('A form with required fields'),
+    );
+
+    $form['name'] = array(
+        '#type' => 'fieldset',
+        '#title' => t('Name'),
+        '#collapsible' => TRUE,
+        '#collapsed' => FALSE,
+    );
+
+    // Make these fields required.
+    $form['name']['first'] = array(
+        '#type' => 'textfield',
+        '#title' => t('First name'),
+        '#required' => TRUE,
+    );
+    $form['name']['last'] = array(
+        '#type' => 'textfield',
+        '#title' => t('Last name'),
+        '#required' => TRUE,
+    );
+
+    $form['submit'] = array(
+        '#type' => 'submit',
+        '#value' => 'Submit',
+        '#suffix' => '<br/><a href="/my/forms"><< Back</a>',
+    );
+    return $form;
+}
+
+/**
+ * Example 5: Basic form with additional element attributes.
+ *
+ * This demonstrates additional attributes of text form fields.
+ *
+ * See the
+ * @link http://api.drupal.org/api/file/developer/topics/forms_api.html complete form reference @endlink
+ *
+ * @ingroup form_example
+ */
+function my_ex_5($form, &$form_state) {
+    $form['description'] = array(
+        '#type' => 'item',
+        '#title' => t('A form with additional attributes'),
+        '#description' => t('This one adds #default_value and #description'),
+    );
+    $form['name'] = array(
+        '#type' => 'fieldset',
+        '#title' => t('Name'),
+        '#collapsible' => TRUE,
+        '#collapsed' => FALSE,
+    );
+
+    $form['name']['first'] = array(
+        '#type' => 'textfield',
+        '#title' => t('First name'),
+        '#required' => TRUE,
+        '#default_value' => "",
+        '#description' => "Please enter your first name.",
+        '#size' => 20,
+        '#maxlength' => 20,
+    );
+    $form['name']['last'] = array(
+        '#type' => 'textfield',
+        '#title' => t('Last name'),
+        '#required' => TRUE,
+    );
+    $form['submit'] = array(
+        '#type' => 'submit',
+        '#value' => 'Submit',
+        '#suffix' => '<br/><a href="/my/forms"><< Back</a>',
+    );
+    return $form;
+}
+
+/**
+ * Example 6: A basic form with a validate handler.
+ *
+ * From http://drupal.org/node/717736
+ * @see form_example_tutorial_6_validate()
+ *
+ * @ingroup form_example
+ */
+function my_ex_6($form, &$form_state) {
+    $form['description'] = array(
+        '#type' => 'item',
+        '#title' => t('A form with a validation handler'),
+    );
+
+    $form['name'] = array(
+        '#type' => 'fieldset',
+        '#title' => t('Name'),
+        '#collapsible' => TRUE,
+        '#collapsed' => FALSE,
+    );
+    $form['name']['first'] = array(
+        '#type' => 'textfield',
+        '#title' => t('First name'),
+        '#required' => TRUE,
+        '#default_value' => "First name",
+        '#description' => "Please enter your first name.",
+        '#size' => 20,
+        '#maxlength' => 20,
+    );
+    $form['name']['last'] = array(
+        '#type' => 'textfield',
+        '#title' => t('Last name'),
+        '#required' => TRUE,
+    );
+
+    // New form field added to permit entry of year of birth.
+    // The data entered into this field will be validated with
+    // the default validation function.
+    $form['year_of_birth'] = array(
+        '#type' => 'textfield',
+        '#title' => "Year of birth",
+        '#description' => 'Format is "YYYY"',
+    );
+
+    $form['submit'] = array(
+        '#type' => 'submit',
+        '#value' => 'Submit',
+        '#suffix' => '<br/><a href="/my/forms"><< Back</a>',
+    );
+    return $form;
+}
+
+function my_ex_6_validate($form, &$form_state) {
+    $year_of_birth = $form_state['values']['year_of_birth'];
+    if ($year_of_birth && ($year_of_birth < 1900 || $year_of_birth > 2000)) {
+        form_set_error('year_of_birth', t('Enter a year between 1900 and 2000.'));
+    }
+}
+
+function my_ex_8($form, &$form_state) {
+
+  $form['description'] = array(
+    '#type' => 'item',
+    '#title' => t('Title description form'),
+  );
+
+  $form['first_field'] = array(
+    '#type' => 'textfield',
+    '#title' => t('First field'),
+    '#description' => "Please enter something.",
+    '#size' => 20,
+    '#maxlength' => 20,
+    '#default_value' => !empty($form_state['values']['first_field']) ? $form_state['values']['first_field'] : '',
+  );
+  
+  $form['next_field'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Next field'),
+    '#description' => "Please enter something.",
+    '#size' => 20,
+    '#maxlength' => 20,
+    '#default_value' => !empty($form_state['values']['first_field']) ? $form_state['values']['first_field'] : '',
+  );  
+  
+
+  
+  if (isset($form_state['my_ex_8_result'])) {
+    $form['footer_text'] = array(
+      '#markup' => '<p>'. $form_state['my_ex_8_result'] .'</p>',
+    );
+  }  
+  
+  $form['submit'] = array(
+    '#type' => 'submit',
+    '#value' => 'Submit',
+    '#submit' => array('my_ex_8_submit'),
+  );
+  return $form;
+}
+
+function my_ex_8_simple_page($keyword){
+	$output = "VALUE 1 = ".$keyword['first_field']."<br/>";
+	$output .= "VALUE 2 = ".$keyword['next_field']."<br/>";
+	return $output;
+}
+
+function my_ex_8_submit($form, &$form_state) {
+  $keyword = $form_state['values'];
+  $form_state['my_ex_8_result'] = my_ex_8_simple_page($keyword);
+  $form_state['rebuild'] = TRUE;
+}
+?>

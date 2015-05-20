@@ -1,0 +1,11 @@
+body.page-node-edit.node-type-description-metodolog-shkala-rei form.node-description_metodolog_shkala_rei-form #edit-actions #edit-delete {
+	display: none;
+}
+/*
+body.page-node-edit.node-type-rating-raking table.field-multiple-table tbody {
+	display: none;
+}
+*/
+body.page-node-edit.node-type-rating-raking table.field-multiple-table thead tr label{
+	cursor: pointer;
+}

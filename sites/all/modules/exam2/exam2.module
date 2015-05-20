@@ -1,0 +1,120 @@
+<?php
+
+function exam2_menu() {
+  $items['my/task_2'] = array(
+    'page callback' => 'block_page',
+    'access callback' => TRUE,
+    'title' => 'Block Example',
+  );
+  return $items;
+}
+
+function block_page() {
+  $page = array(
+    '#type' => 'markup',
+    '#markup' => t('The Block Example'),
+  );
+  return $page;
+}
+
+function fine_form($form, &$form_state) {
+
+  $form['description'] = array(
+    '#type' => 'item',
+    '#title' => t('Title description form'),
+  );
+
+  $form['first_field'] = array(
+    '#type' => 'textfield',
+    '#title' => t('First field'),
+    '#description' => "Please enter something.",
+    '#size' => 20,
+    '#maxlength' => 20,
+    '#default_value' => !empty($form_state['values']['first_field']) ? $form_state['values']['first_field'] : '',
+  );
+  
+  $form['next_field'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Next field'),
+    '#description' => "Please enter something.",
+    '#size' => 20,
+    '#maxlength' => 20,
+    '#default_value' => !empty($form_state['values']['first_field']) ? $form_state['values']['first_field'] : '',
+  );  
+
+  $form['submit'] = array(
+    '#type' => 'submit',
+    '#value' => 'Submit',
+    '#submit' => array('exam2_submit'),
+  );
+
+  return $form;
+}
+
+function exam2_form_fine_form_alter(&$form, &$form_state, $form_id){
+  $form['third_field'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Third field'),
+    '#description' => "Please enter something.",
+    '#size' => 20,
+    '#maxlength' => 20,
+    '#default_value' => !empty($form_state['values']['third_field']) ? $form_state['values']['third_field'] : '',
+  );
+  
+  if (isset($form_state['my_ex_8_result'])) {
+    $form['footer_text'] = array(
+      '#markup' => '<p>'. $form_state['my_ex_8_result'] .'</p>',
+    );
+  }    
+}
+
+function exam2_block_info() {
+  $blocks['example_uppercase'] = array(
+    'info' => t('Example: uppercase this please'),
+    'status' => TRUE,
+    'region' => 'content',
+  );
+  return $blocks;
+}
+
+function exam2_block_view($delta = '') {
+  switch ($delta) {
+    case 'example_uppercase':
+      $block['subject'] = t("uppercase this please");
+      $block['content'] = drupal_get_form('fine_form');
+      break;
+  }
+  
+  return $block;
+}
+
+function block_example_contents($which_block) {
+  switch ($which_block) {
+    case 'example_configurable_text':
+      $result = array(
+        '#markup' => variable_get('block_example_string',
+          t('A default value. This block was created at %time',
+            array('%time' => date('c'))
+          )
+        ),
+      );
+      return $result;
+
+    case 'example_empty':
+
+      return;
+  }
+}
+
+function exam2_simple_page($keyword){
+	$output = "VALUE 3 = ".$keyword['third_field']."<br/>";
+	return $output;
+}
+
+function exam2_submit($form, &$form_state) {
+  $keyword = $form_state['values'];
+  $form_state['my_ex_8_result'] = exam2_simple_page($keyword);
+  $form_state['rebuild'] = TRUE;
+}
+
+?>

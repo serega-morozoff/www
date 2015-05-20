@@ -1,0 +1,5 @@
+name = Exam2
+description = Подвод итогов первого раунда
+package = Examination modules
+core = 7.x
+

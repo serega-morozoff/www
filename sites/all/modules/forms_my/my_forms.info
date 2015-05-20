@@ -1,0 +1,5 @@
+name = My Fofms Ex
+description = My examples Forms Hooks
+package = MyModules 
+core = 7.x
+
