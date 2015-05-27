@@ -1,0 +1,5 @@
+name = My Theming Ex
+description = My examples Themes Hooks
+package = MyModules 
+core = 7.x
+

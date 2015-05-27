@@ -1,0 +1,46 @@
+<?php
+function themes_my_menu()
+{
+    $items = array();
+    $items['my/themes'] = array(
+        'title' => 'A My Themes Example',
+        'page callback'    => '_themes_my_render_page',
+        'access callback'  => TRUE,
+    );
+    return $items;
+}
+
+function themes_my_theme() {
+  return array(
+    'custom_template' => array(
+      'variables' => array(
+		'header' => NULL,
+        'content' => NULL,
+		'footer' => NULL,
+      ),
+    ),
+  );
+}
+
+function theme_custom_template($variables) {
+  $output = '<div>';
+  $output .=    '<div>';
+  $output .=      	$variables['header'];
+  $output .=    '</div>';
+  $output .=    '<div>';
+  $output .=      	$variables['content'];
+  $output .=    '</div>';  
+  $output .=    '<div>';
+  $output .=      	$variables['footer'];
+  $output .=    '</div>';
+  $output .= '</div>';
+  return $output;
+}
+
+function _themes_my_render_page() {
+  $header = t('My awesome header');
+  $content = t('My awesome content');
+  $footer = t('My awesome footer');
+  return theme('custom_template', array('header' => $header, 'content' => $content, 'footer' => $footer));
+}
+?>
